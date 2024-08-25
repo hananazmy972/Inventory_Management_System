@@ -1,0 +1,3 @@
+{
+  "constr": "Server = .;Database = Inventory_System ;Trusted_Connection = True;TrustServerCertificate = True;"
+}
