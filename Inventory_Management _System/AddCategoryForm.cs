@@ -36,7 +36,7 @@ namespace Inventory_Management__System
             dbContext.SaveChanges();
 
             MessageBox.Show("Category added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            ResetForm();
+            this.Hide(); 
 
         }
         private bool IsValidCategoryName(string categoryName)

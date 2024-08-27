@@ -69,7 +69,6 @@ namespace Inventory_Management__System
             CategoryNametxtBox.DataBindings.Add("Text", source, "CategoryName");
 
             CategoryGridView.SelectionChanged += CategoryGridView_SelectionChanged;
-           // ClearBindings();
         }
 
         public List<Category> GetCategories()
@@ -110,8 +109,9 @@ namespace Inventory_Management__System
                 if (source.Current != null)
                 {
                     var selectedCategory = (Category)source.Current;
-                    Delete_Category(selectedCategory); // Pass the ID of the selected category
+                    Delete_Category(selectedCategory);
                     LoadData();
+                    ClearBindings();
                 }
                 else
                 {
@@ -127,18 +127,75 @@ namespace Inventory_Management__System
             dbContext.SaveChanges();
 
         }
+        private void Update_Category(int categoryId, string newCategoryName)
+        {
+            var category = dbContext.Categories.SingleOrDefault(c => c.CategoryID == categoryId);
+            if (category != null)
+            {
+                // Update the category's name
+                category.CategoryName = newCategoryName;
+                dbContext.SaveChanges();
+                MessageBox.Show("Category updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Category not found. Please check the category ID.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
+            var result = MessageBox.Show(text: "Confirm Update", caption: "", buttons: MessageBoxButtons.YesNo);
 
+            if (result == DialogResult.Yes)
+            {
+                if (int.TryParse(CategoryIDtxtBox.Text, out int categoryId) && !string.IsNullOrWhiteSpace(CategoryNametxtBox.Text))
+                {
+                    string newCategoryName = CategoryNametxtBox.Text;
+                    Update_Category(categoryId, newCategoryName);
+                    LoadData();
+                    source.ResetBindings(false);//Reset the bindings to reflect updated data
+                }
+                else
+                {
+                    MessageBox.Show("Please enter a valid Category Name.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
             AddCategoryForm addCategoryForm = new AddCategoryForm();
             addCategoryForm.ShowDialog();
-            LoadData(); 
+            LoadData();
 
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            Home home = new Home();
+            home.Show();
+            this.Hide();
+        }
+
+        private void SearchName_TextChanged(object sender, EventArgs e)
+        {
+            var name = SearchName.Text.Trim();
+            var filteredCategories = dbContext.Categories
+                                      .Where(c => c.CategoryName.Contains(name))
+                                      .Select(c => new Category
+                                      {
+                                          CategoryID = c.CategoryID,
+                                          CategoryName = c.CategoryName
+                                      })
+                                      .ToList();
+            CategoryGridView.DataSource = null; // Reset the DataSource first
+            source.DataSource = filteredCategories; // Set the filtered list to the BindingSource
+            CategoryGridView.DataSource = source; // Set the DataGridView's DataSource to BindingSource
+
+            // Clear current selection
+            CategoryGridView.ClearSelection();
+       
         }
     }
 }

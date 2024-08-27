@@ -8,7 +8,8 @@ namespace Inventory_Management__System.Models
 {
     public enum TransactionType
     {
-        Purchase,
-        Sale     
+        Purchase, // Represents a purchase transaction
+        Sale      // Represents a sale transaction
     }
+
 }

@@ -70,18 +70,20 @@
             // 
             // btnSave
             // 
-            btnSave.Location = new Point(155, 280);
+            btnSave.BackColor = Color.PowderBlue;
+            btnSave.Location = new Point(155, 273);
             btnSave.Name = "btnSave";
-            btnSave.Size = new Size(167, 29);
+            btnSave.Size = new Size(167, 36);
             btnSave.TabIndex = 10;
             btnSave.Text = "Save";
-            btnSave.UseVisualStyleBackColor = true;
+            btnSave.UseVisualStyleBackColor = false;
             btnSave.Click += btnSave_Click;
             // 
             // AddCategoryForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.Azure;
             ClientSize = new Size(464, 345);
             Controls.Add(btnSave);
             Controls.Add(CategoryNametxtBox);
