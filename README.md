@@ -56,7 +56,7 @@ This project is an Inventory Management System designed to help a small retail s
 
 ## Demonstration Video
 
-[A link to the project demonstration video will be placed here.]
+[]
 
 
 
