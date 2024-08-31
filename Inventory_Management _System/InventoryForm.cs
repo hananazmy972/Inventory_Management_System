@@ -1,4 +1,4 @@
-﻿using Inventory_Management__System.Data;
+using Inventory_Management__System.Data;
 using Inventory_Management__System.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -128,6 +128,9 @@ namespace Inventory_Management__System
             this.Hide();
         }
 
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }
