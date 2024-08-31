@@ -1,4 +1,4 @@
-﻿using Inventory_Management__System.Data;
+using Inventory_Management__System.Data;
 using Inventory_Management__System.Models;
 using System;
 using System.Collections.Generic;
@@ -54,7 +54,7 @@ namespace Inventory_Management__System
             };
             dbContext.Products.Add(product);
             dbContext.SaveChanges();
-            MessageBox.Show("Category added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Product added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.Hide();
 
         }
