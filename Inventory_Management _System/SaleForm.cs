@@ -1,4 +1,4 @@
-﻿using Inventory_Management__System.Data;
+using Inventory_Management__System.Data;
 using Inventory_Management__System.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -43,14 +43,14 @@ namespace Inventory_Management__System
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if(!IsValidProduct())
+            if (!IsValidProduct())
             {
                 return;
             }
             int selectedProductId = (int)comboBox1.SelectedValue;
-            int quantity = int.Parse(numericUpDown1.Text); 
-;
-            var product = dbContext.Inventories.FirstOrDefault(t => t.ProductID == selectedProductId);  
+            int quantity = int.Parse(numericUpDown1.Text);
+            ;
+            var product = dbContext.Inventories.FirstOrDefault(t => t.ProductID == selectedProductId);
             if (product != null && product.Quantity >= quantity)
             {
                 product.Quantity -= quantity; //minus total quantity in stock
@@ -68,7 +68,7 @@ namespace Inventory_Management__System
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
-             else
+            else
             {
                 MessageBox.Show("Not enough stock available.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -87,7 +87,9 @@ namespace Inventory_Management__System
                 MessageBox.Show("Please enter a valid  quantity than zero.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
-            return true;    
+            return true;
         }
+
+
     }
 }
