@@ -1,4 +1,4 @@
-﻿using Inventory_Management__System.Data;
+using Inventory_Management__System.Data;
 using Inventory_Management__System.Models;
 using System;
 using System.Collections.Generic;
@@ -45,7 +45,7 @@ namespace Inventory_Management__System
             }
             int selectedProductId = (int)comboBox1.SelectedValue;
             int quantity = int.Parse(numericUpDown1.Text);
-            ;
+            //check if product is in Stock or not
             var product = dbContext.Inventories.FirstOrDefault(t => t.ProductID == selectedProductId);
             if (product != null)
             {
@@ -60,13 +60,30 @@ namespace Inventory_Management__System
                 };
                 dbContext.Transactions.Add(transaction);
                 dbContext.SaveChanges();
-                MessageBox.Show("Sale completed successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Purchase completed successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             else
             {
-                MessageBox.Show("Not enough stock available.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+              
+                Inventory newInventory = new Inventory();
+                newInventory.ProductID = selectedProductId;
+                newInventory.Quantity = quantity;
+                dbContext.Inventories.Add(newInventory);
+                Transaction transaction = new Transaction
+                {
+                    ProductID = selectedProductId,
+                    TransactionDate = dateTimePicker1.Value,
+                    Quantity = quantity,
+                    TransactionType = "Purchase",
+                    Notes = textBox1.Text
+                };
+                dbContext.Transactions.Add(transaction);
+                dbContext.SaveChanges();
+                MessageBox.Show("Purchase completed successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.DialogResult = DialogResult.OK;
+                this.Close();
             }
         }
         private bool IsValidProduct()
@@ -78,7 +95,7 @@ namespace Inventory_Management__System
                 return false;
             }
             //check quantity
-            if (!int.TryParse(numericUpDown1.Text, out int quantity) )
+            if (!int.TryParse(numericUpDown1.Text, out int quantity) || quantity <= 0)
             {
                 MessageBox.Show("Please enter a valid quantity than zero.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
